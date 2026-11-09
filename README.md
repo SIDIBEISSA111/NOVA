@@ -1,5 +1,7 @@
 # NOVA — Expéditions Interstellaires
 
+**En ligne : https://nova-expeditions.vercel.app**
+
 Site vitrine d'une agence spatiale fictive. En faisant défiler la page, le visiteur
 voyage de la Terre jusqu'à une galaxie lointaine. **Tout est procédural** : aucun
 modèle 3D, aucune texture externe, aucun fichier audio. Chaque planète, nuage,
@@ -222,6 +224,6 @@ Ou en ligne de commande : `npx vercel` (puis `npx vercel --prod`).
 
 Les fichiers de `dist/assets/` portent une empreinte dans leur nom : les deux configurations les mettent en cache un an.
 
-**Après le premier déploiement** : remplacer `/og-image.jpg` par l'URL absolue
-(`https://votre-site…/og-image.jpg`) dans `index.html` et ajouter `<meta property="og:url">` —
-certains réseaux sociaux exigent des URL absolues pour l'aperçu.
+**Site en ligne** : https://nova-expeditions.vercel.app — les balises `og:url`, `og:image`,
+`twitter:image` et `canonical` de `index.html` pointent vers cette adresse (les réseaux sociaux
+exigent des URL absolues). Si le domaine change, mettre ces quatre URL à jour.

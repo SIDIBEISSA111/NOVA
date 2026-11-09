@@ -8,3 +8,6 @@ lighthouse-*.json
 # Outils locaux
 .claude/
 .vercel/
+
+.vercel
+.env*
