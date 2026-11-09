@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <!-- Image de secours affichée si WebGL est indisponible : Terre, étoiles, galaxie. -->
+  <defs>
+    <radialGradient id="sky" cx="70%" cy="45%" r="80%">
+      <stop offset="0" stop-color="#0b1426"/>
+      <stop offset="1" stop-color="#03040a"/>
+    </radialGradient>
+    <radialGradient id="earth" cx="38%" cy="34%" r="75%">
+      <stop offset="0" stop-color="#5fb8e6"/>
+      <stop offset=".35" stop-color="#1c6aa0"/>
+      <stop offset=".75" stop-color="#0a2a4a"/>
+      <stop offset="1" stop-color="#030b16"/>
+    </radialGradient>
+    <radialGradient id="atmo" cx="50%" cy="50%" r="50%">
+      <stop offset=".86" stop-color="#7dd3fc" stop-opacity="0"/>
+      <stop offset=".93" stop-color="#7dd3fc" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#7dd3fc" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="gal" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#fff1c9"/>
+      <stop offset=".25" stop-color="#f5b841" stop-opacity=".7"/>
+      <stop offset=".6" stop-color="#7dd3fc" stop-opacity=".15"/>
+      <stop offset="1" stop-color="#7dd3fc" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="2"/></filter>
+    <pattern id="stars" width="240" height="240" patternUnits="userSpaceOnUse">
+      <circle cx="20" cy="30" r="1" fill="#fff" opacity=".8"/>
+      <circle cx="140" cy="60" r=".7" fill="#cfe9ff" opacity=".7"/>
+      <circle cx="90" cy="150" r="1.2" fill="#fff" opacity=".9"/>
+      <circle cx="200" cy="200" r=".6" fill="#ffe6b0" opacity=".7"/>
+      <circle cx="60" cy="210" r=".8" fill="#fff" opacity=".5"/>
+      <circle cx="210" cy="110" r=".5" fill="#fff" opacity=".6"/>
+      <circle cx="170" cy="15" r=".9" fill="#fff" opacity=".7"/>
+    </pattern>
+  </defs>
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <rect width="1600" height="900" fill="url(#stars)"/>
+  <ellipse cx="300" cy="200" rx="220" ry="60" fill="url(#gal)" transform="rotate(-18 300 200)" opacity=".8"/>
+  <circle cx="1100" cy="450" r="330" fill="url(#atmo)"/>
+  <circle cx="1100" cy="450" r="300" fill="url(#earth)"/>
+  <path d="M960 330c40-30 110-40 150-10s20 70-30 90-120 0-130-30 0-40 10-50zM1150 520c60-20 130 10 140 50s-40 70-100 60-90-40-80-70 20-35 40-40z" fill="#2f7a55" opacity=".55" filter="url(#soft)"/>
+  <path d="M1400 450a300 300 0 0 1-480 240a300 300 0 0 0 480-240z" fill="#030b16" opacity=".55"/>
+</svg>

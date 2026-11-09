@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>NOVA — Expéditions Interstellaires</title>
+    <meta
+      name="description"
+      content="NOVA, agence d'expéditions interstellaires. Embarquez pour un voyage de la Terre jusqu'à une galaxie lointaine : missions, technologie et recrutement de l'équipage."
+    />
+    <meta name="theme-color" content="#03040a" />
+    <meta name="color-scheme" content="dark" />
+
+    <!-- Open Graph / partage social -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="NOVA" />
+    <meta property="og:title" content="NOVA — Expéditions Interstellaires" />
+    <meta
+      property="og:description"
+      content="Un voyage en 3D, de la Terre à une galaxie lointaine. Rejoignez l'équipage."
+    />
+    <meta property="og:image" content="/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="La Terre vue de l'espace, avec le logo NOVA" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <!-- Polices : connexion anticipée + font-display: swap (paramètre display=swap) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap"
+    />
+
+    <!-- Marque la page comme « JS actif » avant le premier rendu (évite un flash) -->
+    <script>
+      document.documentElement.classList.add('js');
+    </script>
+    <script type="module" src="/src/main.js"></script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+    <!-- Le seul canvas WebGL du site : il est décoratif, le contenu est dans le HTML. -->
+    <div class="stage" aria-hidden="true">
+      <canvas class="stage__canvas" id="webgl"></canvas>
+    </div>
+
+    <!-- Image de secours si WebGL est indisponible -->
+    <div class="fallback" hidden>
+      <img
+        src="/fallback.svg"
+        alt="Illustration : la Terre bordée d'une atmosphère bleutée, devant un champ d'étoiles et une galaxie spirale dorée."
+        width="1600"
+        height="900"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+
+    <!-- Écran de chargement : placé SOUS le texte, il ne masque jamais le contenu -->
+    <div class="loader" role="status" aria-live="polite">
+      <div class="loader__ring" aria-hidden="true">
+        <svg viewBox="0 0 100 100">
+          <circle class="loader__track" cx="50" cy="50" r="46" />
+          <circle class="loader__bar" cx="50" cy="50" r="46" pathLength="100" />
+        </svg>
+      </div>
+      <p class="loader__label">
+        <span class="loader__text">Initialisation des systèmes</span>
+        <span class="loader__value"><span data-loader-value>0</span>&nbsp;%</span>
+      </p>
+    </div>
+
+    <header class="topbar">
+      <a class="brand" href="#hero" aria-label="NOVA, retour au départ">
+        <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true">
+          <circle cx="16" cy="16" r="6" fill="currentColor" />
+          <ellipse cx="16" cy="16" rx="14" ry="5" fill="none" stroke="currentColor" stroke-width="1.5" transform="rotate(-24 16 16)" />
+        </svg>
+        <span class="brand__name">NOVA</span>
+      </a>
+      <div class="topbar__actions">
+        <button class="sound" type="button" aria-pressed="false" data-interactive>
+          <span class="sound__bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span class="sound__label">Son <span data-sound-state>coupé</span></span>
+        </button>
+        <a class="btn btn--small" href="#equipage">Rejoindre</a>
+      </div>
+    </header>
+
+    <!-- Barre de progression du voyage, qui sert aussi de navigation -->
+    <nav class="journey" aria-label="Étapes du voyage">
+      <div class="journey__rail">
+      <div class="journey__track" aria-hidden="true"><div class="journey__fill"></div></div>
+      <ol class="journey__steps">
+        <li><a href="#hero" data-step="0"><span>Terre</span></a></li>
+        <li><a href="#mission" data-step="1"><span>Lune</span></a></li>
+        <li><a href="#expeditions" data-step="2"><span>Astéroïdes</span></a></li>
+        <li><a href="#technologie" data-step="3"><span>Soleil</span></a></li>
+        <li><a href="#inconnu" data-step="4"><span>Trou noir</span></a></li>
+        <li><a href="#equipage" data-step="5"><span>Galaxie</span></a></li>
+      </ol>
+      </div>
+      <p class="journey__distance">
+        <span class="journey__distance-label">Distance parcourue</span>
+        <span class="journey__distance-value"><span data-distance>0</span> années-lumière</span>
+      </p>
+    </nav>
+
+    <main id="contenu">
+      <!-- 1. HERO -->
+      <section class="section section--hero" id="hero" data-section="0" aria-labelledby="hero-title">
+        <div class="section__inner">
+          <p class="kicker">NOVA — Expéditions Interstellaires</p>
+          <h1 class="hero__title" id="hero-title" data-split>Au-delà de l'horizon</h1>
+          <p class="lead">
+            Depuis 2061, nous emmenons des équipages là où aucune carte ne va.
+            Votre voyage commence ici, à quelques centaines de kilomètres de la Terre.
+          </p>
+          <div class="cta-row">
+            <a class="btn" href="#mission">Découvrir la mission</a>
+            <a class="btn btn--ghost" href="#equipage">Rejoindre l'équipage</a>
+          </div>
+        </div>
+        <a class="scroll-hint" href="#mission">
+          <span class="scroll-hint__line" aria-hidden="true"></span>
+          Défiler pour décoller
+        </a>
+        <p class="sr-only">Illustration : la Terre en rotation, ses océans brillants et ses nuages, entourée d'un halo bleu.</p>
+      </section>
+
+      <!-- 2. DÉCOLLAGE -->
+      <section class="section section--right" id="mission" data-section="1" aria-labelledby="mission-title">
+        <div class="section__inner panel" data-reveal>
+          <p class="kicker">01 · Décollage</p>
+          <h2 id="mission-title">La mission</h2>
+          <p>
+            NOVA est née d'une idée simple : l'humanité n'a pas fini d'explorer.
+            Ingénieurs, pilotes et scientifiques de 40 nations construisent ensemble
+            les vaisseaux qui franchiront la frontière du système solaire.
+          </p>
+          <p>
+            Chaque départ est une promesse : revenir avec des réponses,
+            et laisser la porte ouverte à ceux qui suivront.
+          </p>
+        </div>
+        <p class="sr-only">Illustration : la caméra s'éloigne de la Terre ; la Lune, couverte de cratères, passe au premier plan.</p>
+      </section>
+
+      <!-- 3. ASTÉROÏDES -->
+      <section class="section section--wide" id="expeditions" data-section="2" aria-labelledby="exp-title">
+        <div class="section__inner">
+          <div class="section__head" data-reveal>
+            <p class="kicker">02 · Ceinture d'astéroïdes</p>
+            <h2 id="exp-title">Nos expéditions</h2>
+          </div>
+          <ul class="cards" role="list">
+            <li class="card" data-tilt data-reveal>
+              <article>
+                <p class="card__status card__status--live">En cours</p>
+                <h3>Artemis-IX</h3>
+                <p class="card__dest">Ceinture de Kuiper</p>
+                <p>Cartographier les glaces primitives aux confins du système solaire.</p>
+                <dl class="card__meta">
+                  <div><dt>Durée</dt><dd>6 ans</dd></div>
+                  <div><dt>Équipage</dt><dd>12</dd></div>
+                </dl>
+              </article>
+            </li>
+            <li class="card" data-tilt data-reveal>
+              <article>
+                <p class="card__status">Préparation</p>
+                <h3>Hélios</h3>
+                <p class="card__dest">Couronne solaire</p>
+                <p>Plonger au plus près de notre étoile, derrière un bouclier de carbone tressé.</p>
+                <dl class="card__meta">
+                  <div><dt>Durée</dt><dd>14 mois</dd></div>
+                  <div><dt>Équipage</dt><dd>4</dd></div>
+                </dl>
+              </article>
+            </li>
+            <li class="card" data-tilt data-reveal>
+              <article>
+                <p class="card__status card__status--gold">Recrutement</p>
+                <h3>Odyssée</h3>
+                <p class="card__dest">Proxima Centauri b</p>
+                <p>Le premier vol habité vers une autre étoile. 4,24 années-lumière.</p>
+                <dl class="card__meta">
+                  <div><dt>Durée</dt><dd>19 ans</dd></div>
+                  <div><dt>Équipage</dt><dd>36</dd></div>
+                </dl>
+              </article>
+            </li>
+          </ul>
+        </div>
+        <p class="sr-only">Illustration : la caméra traverse un champ de milliers d'astéroïdes rocheux en rotation.</p>
+      </section>
+
+      <!-- 4. SOLEIL -->
+      <section class="section section--left" id="technologie" data-section="3" aria-labelledby="tech-title">
+        <div class="section__inner panel" data-reveal>
+          <p class="kicker">03 · Le Soleil</p>
+          <h2 id="tech-title">Notre technologie</h2>
+          <p>
+            Propulsion à fusion compacte, voiles photoniques et boucliers magnétiques :
+            nos vaisseaux puisent leur énergie dans la lumière des étoiles qu'ils frôlent.
+          </p>
+          <ul class="stats" role="list">
+            <li>
+              <span class="stats__value"><span data-count="38.4" data-decimals="1">38,4</span></span>
+              <span class="stats__label">milliards de km parcourus</span>
+            </li>
+            <li>
+              <span class="stats__value"><span data-count="147">147</span></span>
+              <span class="stats__label">missions accomplies</span>
+            </li>
+            <li>
+              <span class="stats__value"><span data-count="0.92" data-decimals="2">0,92</span>&nbsp;c</span>
+              <span class="stats__label">vitesse de croisière</span>
+            </li>
+            <li>
+              <span class="stats__value"><span data-count="99.98" data-decimals="2">99,98</span>&nbsp;%</span>
+              <span class="stats__label">fiabilité des propulseurs</span>
+            </li>
+          </ul>
+        </div>
+        <p class="sr-only">Illustration : un soleil en ébullition, entouré d'une couronne lumineuse.</p>
+      </section>
+
+      <!-- 5. TROU NOIR -->
+      <section class="section section--bottom" id="inconnu" data-section="4" aria-labelledby="bh-title">
+        <div class="section__inner panel panel--center" data-reveal>
+          <p class="kicker">04 · Horizon des événements</p>
+          <h2 id="bh-title">Vers l'inconnu</h2>
+          <p>
+            Là où la lumière elle-même se courbe, les lois que nous connaissons vacillent.
+            C'est précisément là que nous voulons aller : pour comprendre, pas pour conquérir.
+          </p>
+        </div>
+        <p class="sr-only">Illustration : un trou noir entouré d'un disque d'accrétion doré ; les étoiles derrière lui sont déformées par la gravité.</p>
+      </section>
+
+      <!-- 6. GALAXIE -->
+      <section class="section section--right" id="equipage" data-section="5" aria-labelledby="crew-title">
+        <div class="section__inner panel panel--form" data-reveal>
+          <p class="kicker">05 · Destination</p>
+          <h2 id="crew-title">Rejoignez l'équipage</h2>
+          <p>La prochaine fenêtre de lancement s'ouvre bientôt. Dites-nous qui vous êtes.</p>
+
+          <form class="form" novalidate>
+            <div class="field">
+              <label for="f-name">Nom complet</label>
+              <input id="f-name" name="name" type="text" autocomplete="name" required minlength="2" />
+              <p class="field__error" id="f-name-err" aria-live="polite"></p>
+            </div>
+            <div class="field">
+              <label for="f-email">E-mail</label>
+              <input id="f-email" name="email" type="email" autocomplete="email" required />
+              <p class="field__error" id="f-email-err" aria-live="polite"></p>
+            </div>
+            <div class="field">
+              <label for="f-role">Poste visé</label>
+              <select id="f-role" name="role">
+                <option>Pilote</option>
+                <option>Ingénieur·e propulsion</option>
+                <option>Astrophysicien·ne</option>
+                <option>Médecin de bord</option>
+                <option>Botaniste</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="f-msg">Pourquoi partir ? <span class="field__opt">(facultatif)</span></label>
+              <textarea id="f-msg" name="message" rows="3"></textarea>
+            </div>
+            <button class="btn btn--block" type="submit">Envoyer ma candidature</button>
+          </form>
+
+          <div class="confirm" hidden tabindex="-1">
+            <svg class="confirm__icon" viewBox="0 0 52 52" aria-hidden="true">
+              <circle cx="26" cy="26" r="24" pathLength="100" />
+              <path d="M15 27 l7 7 l15 -16" pathLength="100" />
+            </svg>
+            <p class="confirm__title">Bienvenue à bord<span data-confirm-name></span>.</p>
+            <p>Votre candidature a été transmise au centre de contrôle. Nous reviendrons vers vous avant la prochaine fenêtre de lancement.</p>
+            <button class="btn btn--ghost btn--small" type="button" data-confirm-reset>Envoyer une autre candidature</button>
+          </div>
+        </div>
+        <p class="sr-only">Illustration : une galaxie spirale de cent mille étoiles, bleue en périphérie et dorée en son cœur.</p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>NOVA est une agence fictive — démonstration Three.js, entièrement procédurale.</p>
+      <p class="footer__hint">Astuce : touche <kbd>F</kbd> pour afficher les images/seconde.</p>
+    </footer>
+
+    <!-- Curseur personnalisé (souris uniquement) -->
+    <div class="cursor" aria-hidden="true">
+      <span class="cursor__ring"></span>
+      <span class="cursor__dot"></span>
+    </div>
+
+    <!-- Compteur d'images/seconde (touche F) -->
+    <div class="fps" hidden aria-hidden="true"></div>
+  </body>
+</html>
