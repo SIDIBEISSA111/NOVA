@@ -1,6 +1,6 @@
 # NOVA — Expéditions Interstellaires
 
-**En ligne : https://nova-expeditions.vercel.app**
+**En ligne : https://nova-expeditions.vercel.app** · Code source : https://github.com/SIDIBEISSA111/NOVA
 
 Site vitrine d'une agence spatiale fictive. En faisant défiler la page, le visiteur
 voyage de la Terre jusqu'à une galaxie lointaine. **Tout est procédural** : aucun
@@ -205,6 +205,8 @@ Quand un effet est trop coûteux, il est **remplacé** par une version plus lég
 ## 6. Déployer gratuitement
 
 Le build produit un site 100 % statique dans `dist/`. Les deux fichiers de configuration sont déjà prêts.
+
+> Ce projet est déjà relié à Vercel : chaque `git push` sur `main` redéploie automatiquement https://nova-expeditions.vercel.app.
 
 ### Netlify (`netlify.toml`)
 
